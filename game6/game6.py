@@ -43,20 +43,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         #control our player fish with arrow keys
-        player.stop()
+        #player.stop()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_w:
                 print("You pressed the key up key")
                 player.move_up()
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_s:
                 print("You pressed the down key")
                 player.move_down()
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_a:
                 print("You pressed the left key")
                 player.move_left()
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_d:
                 print("You pressed the right key")
                 player.move_right()
+
+        if event.type == pygame.KEYUP:
+            player.stop()
 
     #blit background
     screen.blit(background,(0,0))
