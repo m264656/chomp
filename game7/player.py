@@ -6,7 +6,7 @@ from game_parameters import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load("../assets/sprites/eel.png").convert()
+        self.image = pygame.image.load("../assets/sprites/tiny_nyan.png").convert()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
         self.x = x
@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.x_speed = 0
         self.y_speed = 0
-        self.forward_image = pygame.image.load("../assets/sprites/eel.png").convert()
+        self.forward_image = pygame.image.load("../assets/sprites/tiny_nyan.png").convert()
         self.forward_image.set_colorkey((0,0,0))
         self.reverse_image = pygame.transform.flip(self.forward_image, True, False)
         self.image = self.forward_image

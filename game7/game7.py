@@ -39,7 +39,19 @@ chomp = pygame.mixer.Sound("../assets/sounds/chomp.wav")
 
 #placeholder for Orange player
 
-while running:
+#load sound effects
+chomp = pygame.mixer.Sound("../assets/sounds/chomp.wav")
+hurt = pygame.mixer.Sound("../assets/sounds/hurt.wav")
+bubbles = pygame.mixer.Sound("../assets/sounds/bubbles.wav")
+
+#add alternate and game over
+life_icon = pygame.image.load("../assets/sprites/orange_fish_alt.png").convert()
+life_icon.set_colorkey((0,0,0))
+
+#set lives
+lives = NUM_LIVES
+
+while lives > 0:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -86,9 +98,10 @@ while running:
 
     if result2:
         #play sounds
-        pygame.mixer.Sound.play(chomp)
-        score -= len(result)
-        add_enemies(len(result))
+        pygame.mixer.Sound.play(hurt)
+        lives -= len(result2)
+        score -= len(result2)
+        add_enemies(len(result2))
 
     #check if fish left the screen
     for fish in fishes:
@@ -113,9 +126,34 @@ while running:
     text = score_font.render(f"{score}", True, (50, 81, 123))
     screen.blit(text, (screen_width - text.get_width() / 2 - 40, screen_height / 10 - text.get_height() / 2))
 
+    #draw lives in lower left corner
+    for i in range(lives):
+        screen.blit(life_icon, (i*tile_size, screen_height-tile_size))
+
     pygame.display.flip()
 
     clock.tick(60)
 
-pygame.quit()
-sys.exit()
+#create new background whengame over
+screen.blit(background, (0,0))
+
+#show game over message
+message = score_font.render("GAME OVER", True, (0,0,0))
+screen.blit(message, (screen_width / 2- message.get_width() / 2, screen_height / 2))
+
+#show final score
+score_text = score_font.render(f"Score: {score}", True, (0,0,0))
+screen.blit(score_text, (screen_width/2 - score_text.get_width()/2, screen_height / 2 +score_text.get_height()))
+#update display
+pygame.display.flip()
+
+#play game over sound effect
+pygame.mixer.Sound.play(bubbles)
+
+#wait for user to exit game
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
